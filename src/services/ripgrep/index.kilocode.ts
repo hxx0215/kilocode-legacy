@@ -1,11 +1,9 @@
-import { execFile } from "child_process"
+import * as cp from "child_process"
 import fs from "fs/promises"
 import path from "path"
-import { promisify } from "util"
+import * as util from "util"
 
 import { fileExistsAtPath } from "../../utils/fs"
-
-const execFileAsync = promisify(execFile)
 
 /**
  * Newer VS Code versions (especially on Windows) store ripgrep under a dynamic
@@ -67,7 +65,7 @@ export async function checkBunPath(vscodeAppRoot: string, binName: string) {
 export async function checkSystemPath(binName: string): Promise<string | undefined> {
 	const cmd = process.platform.startsWith("win") ? "where" : "which"
 	try {
-		const { stdout } = await execFileAsync(cmd, [binName], { encoding: "utf-8" })
+		const { stdout } = await util.promisify(cp.execFile)(cmd, [binName], { encoding: "utf-8" })
 		const result = stdout.trim().split(/\r?\n/)[0]
 		if (result && (await fileExistsAtPath(result))) {
 			return result
