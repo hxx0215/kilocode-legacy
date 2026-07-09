@@ -8,6 +8,7 @@ import { ZaiApiLine } from "../provider-settings.js"
 // https://docs.z.ai/guides/llm/glm-4.7
 // https://docs.z.ai/guides/llm/glm-5 // kilocode_change
 // https://docs.z.ai/guides/llm/glm-5-turbo // kilocode_change
+// https://docs.z.ai/guides/llm/glm-5.2 // kilocode_change
 // https://docs.z.ai/guides/overview/pricing
 // https://bigmodel.cn/pricing
 
@@ -211,6 +212,23 @@ export const internationalZAiModels = {
 		description:
 			"GLM-5.1 is the latest iteration of the GLM-5 series, available via the GLM Coding Plan with enhanced capabilities for coding and agentic tasks.",
 	},
+	"glm-5.2": {
+		maxTokens: 131_072,
+		contextWindow: 1_000_000,
+		supportsImages: false,
+		supportsPromptCache: true,
+		supportsNativeTools: true,
+		defaultToolProtocol: "native",
+		supportsReasoningEffort: ["disable", "medium"],
+		reasoningEffort: "medium",
+		preserveReasoning: true,
+		inputPrice: 0,
+		outputPrice: 0,
+		cacheWritesPrice: 0,
+		cacheReadsPrice: 0,
+		description:
+			"GLM-5.2 is the latest iteration of the GLM-5 series with 1M context, available via the GLM Coding Plan with enhanced capabilities for coding and agentic tasks.",
+	},
 	"glm-4.7-flash": {
 		maxTokens: 16_384,
 		contextWindow: 200_000,
@@ -411,6 +429,23 @@ export const mainlandZAiModels = {
 		cacheReadsPrice: 0,
 		description:
 			"GLM-5.1 is the latest iteration of the GLM-5 series, available via the GLM Coding Plan with enhanced capabilities for coding and agentic tasks.",
+	},
+	"glm-5.2": {
+		maxTokens: 131_072,
+		contextWindow: 1_000_000,
+		supportsImages: false,
+		supportsPromptCache: true,
+		supportsNativeTools: true,
+		defaultToolProtocol: "native",
+		supportsReasoningEffort: ["disable", "medium"],
+		reasoningEffort: "medium",
+		preserveReasoning: true,
+		inputPrice: 0,
+		outputPrice: 0,
+		cacheWritesPrice: 0,
+		cacheReadsPrice: 0,
+		description:
+			"GLM-5.2 is the latest iteration of the GLM-5 series with 1M context, available via the GLM Coding Plan with enhanced capabilities for coding and agentic tasks.",
 	},
 	"glm-4.7-flash": {
 		maxTokens: 16_384,

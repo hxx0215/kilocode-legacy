@@ -3,9 +3,16 @@
 import * as path from "path" // kilocode_change
 import { getBinPath, truncateLine } from "../index" // kilocode_change
 import { fileExistsAtPath } from "../../../utils/fs" // kilocode_change
+import { checkBunPath, checkCommitHashRipgrepPath, checkSystemPath } from "../index.kilocode" // kilocode_change
 // kilocode_change start
 vi.mock("../../../utils/fs", () => ({
 	fileExistsAtPath: vi.fn(),
+}))
+
+vi.mock("../index.kilocode", () => ({
+	checkCommitHashRipgrepPath: vi.fn(),
+	checkBunPath: vi.fn(),
+	checkSystemPath: vi.fn(),
 }))
 // kilocode_change end
 describe("Ripgrep line truncation", () => {
@@ -62,6 +69,10 @@ describe("getBinPath", () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks()
+		// Default: kilocode fallback functions find nothing
+		vi.mocked(checkCommitHashRipgrepPath).mockResolvedValue(undefined)
+		vi.mocked(checkBunPath).mockResolvedValue(undefined)
+		vi.mocked(checkSystemPath).mockResolvedValue(undefined)
 	})
 
 	it("should find ripgrep in traditional node_modules/@vscode/ripgrep/bin/", async () => {
@@ -94,23 +105,17 @@ describe("getBinPath", () => {
 		expect(result).toBe(expectedPath)
 	})
 
-	it("should handle require.resolve fallback for bun installs", async () => {
+	it("should use checkBunPath fallback when traditional paths fail", async () => {
 		const vscodeAppRoot = "/path/to/vscode"
+		const bunPath = path.join("/global/cache/@vscode/ripgrep/bin", binName)
 
-		// Mock traditional paths not existing
-		mockFileExists.mockImplementation(async (filePath: string) => {
-			// Only return true for paths that would be resolved via require.resolve
-			// This simulates bun's behavior where the binary exists in the global cache
-			return filePath.includes("@vscode/ripgrep") && filePath.includes("bin")
-		})
+		// Traditional paths don't exist
+		mockFileExists.mockResolvedValue(false)
+		vi.mocked(checkBunPath).mockResolvedValue(bunPath)
 
 		const result = await getBinPath(vscodeAppRoot)
 
-		// The result should either be undefined (if @vscode/ripgrep is not installed)
-		// or a valid path (if it is installed and resolved via require.resolve)
-		// We can't mock require.resolve in vitest easily, so we just verify the function
-		// doesn't throw and returns a valid result type
-		expect(result === undefined || typeof result === "string").toBe(true)
+		expect(result).toBe(bunPath)
 	})
 
 	it("should return undefined when ripgrep is not found anywhere", async () => {
@@ -137,6 +142,62 @@ describe("getBinPath", () => {
 		const result = await getBinPath(vscodeAppRoot)
 
 		// Should return traditional path when it exists
+		expect(result).toBe(traditionalPath)
+	})
+
+	it("should find ripgrep under a commit-hash subdirectory (newer VS Code)", async () => {
+		const vscodeAppRoot = "/path/to/vscode"
+		const commitHashPath = path.join(
+			vscodeAppRoot,
+			"abc123def",
+			"resources",
+			"app",
+			"node_modules",
+			"@vscode",
+			"ripgrep-universal",
+			`bin/${process.platform}-${process.arch}`,
+			binName,
+		)
+
+		// Traditional paths don't exist
+		mockFileExists.mockResolvedValue(false)
+		// Commit-hash scan finds the binary
+		vi.mocked(checkCommitHashRipgrepPath).mockResolvedValue(commitHashPath)
+
+		const result = await getBinPath(vscodeAppRoot)
+
+		expect(result).toBe(commitHashPath)
+	})
+
+	it("should fall back to system PATH (where/which) as last resort", async () => {
+		const vscodeAppRoot = "/path/to/vscode"
+		const systemPath = "/usr/local/bin/" + binName
+
+		// Nothing exists in vscodeAppRoot
+		mockFileExists.mockResolvedValue(false)
+		// System PATH finds the binary
+		vi.mocked(checkSystemPath).mockResolvedValue(systemPath)
+
+		const result = await getBinPath(vscodeAppRoot)
+
+		expect(result).toBe(systemPath)
+	})
+
+	it("should prioritize traditional paths over commit-hash and system paths", async () => {
+		const vscodeAppRoot = "/path/to/vscode"
+		const traditionalPath = path.join(
+			vscodeAppRoot,
+			"node_modules/@vscode/ripgrep-universal",
+			`bin/${process.platform}-${process.arch}`,
+			binName,
+		)
+
+		mockFileExists.mockImplementation(async (filePath: string) => filePath === traditionalPath)
+		vi.mocked(checkCommitHashRipgrepPath).mockResolvedValue("/some/commit/hash/" + binName)
+		vi.mocked(checkSystemPath).mockResolvedValue("/usr/local/bin/" + binName)
+
+		const result = await getBinPath(vscodeAppRoot)
+
 		expect(result).toBe(traditionalPath)
 	})
 })
