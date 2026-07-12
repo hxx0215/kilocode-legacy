@@ -287,7 +287,7 @@ export class AutocompleteServiceManager {
 	private async updateGlobalContext() {
 		await vscode.commands.executeCommand(
 			"setContext",
-			"kilocode.autocomplete.enableSmartInlineTaskKeybinding",
+			"gilocode.autocomplete.enableSmartInlineTaskKeybinding",
 			this.settings?.enableSmartInlineTaskKeybinding || false,
 		)
 	}
@@ -357,7 +357,7 @@ export class AutocompleteServiceManager {
 		if (response === disableCopilot) {
 			await vscode.commands.executeCommand<any>("github.copilot.completions.disable")
 		} else if (response === disableInlineAssist) {
-			await vscode.commands.executeCommand<any>("kilo-code.autocomplete.disable")
+			await vscode.commands.executeCommand<any>("gilo-code.autocomplete.disable")
 		}
 	}
 

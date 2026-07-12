@@ -1,5 +1,5 @@
 {
-	"name": "kilo-code",
+	"name": "gilo-code",
 	"packageManager": "pnpm@10.16.0",
 	"engines": {
 		"node": "20.20.0"

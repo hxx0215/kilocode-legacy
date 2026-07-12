@@ -13,27 +13,27 @@ export const registerAutocompleteProvider = (context: vscode.ExtensionContext, c
 
 	// Register AutocompleteServiceManager Commands
 	context.subscriptions.push(
-		vscode.commands.registerCommand("kilo-code.autocomplete.reload", async () => {
+		vscode.commands.registerCommand("gilo-code.autocomplete.reload", async () => {
 			await autocompleteManager.load()
 		}),
 	)
 	context.subscriptions.push(
-		vscode.commands.registerCommand("kilo-code.autocomplete.codeActionQuickFix", async () => {
+		vscode.commands.registerCommand("gilo-code.autocomplete.codeActionQuickFix", async () => {
 			return
 		}),
 	)
 	context.subscriptions.push(
-		vscode.commands.registerCommand("kilo-code.autocomplete.generateSuggestions", async () => {
+		vscode.commands.registerCommand("gilo-code.autocomplete.generateSuggestions", async () => {
 			autocompleteManager.codeSuggestion()
 		}),
 	)
 	context.subscriptions.push(
-		vscode.commands.registerCommand("kilo-code.autocomplete.showIncompatibilityExtensionPopup", async () => {
+		vscode.commands.registerCommand("gilo-code.autocomplete.showIncompatibilityExtensionPopup", async () => {
 			await autocompleteManager.showIncompatibilityExtensionPopup()
 		}),
 	)
 	context.subscriptions.push(
-		vscode.commands.registerCommand("kilo-code.autocomplete.disable", async () => {
+		vscode.commands.registerCommand("gilo-code.autocomplete.disable", async () => {
 			await autocompleteManager.disable()
 		}),
 	)

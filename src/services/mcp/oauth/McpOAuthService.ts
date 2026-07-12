@@ -169,7 +169,7 @@ export class McpOAuthService {
 		const redirectUris = [
 			"http://127.0.0.1/",
 			`http://127.0.0.1:${DEFAULT_AUTH_FLOW_PORT}/`,
-			"vscode://kilocode.kilo-code/oauth/callback",
+			"vscode://gilocode.gilo-code/oauth/callback",
 		]
 		const clientCredentials = await this.getOrRegisterClient(authServerMetadata, redirectUris, options)
 
@@ -454,7 +454,7 @@ export class McpOAuthService {
 
 		// Client metadata according to RFC 7591
 		const clientMetadata = {
-			client_name: "Kilo Code",
+			client_name: "Gilo Code",
 			client_uri: "https://kilocode.ai",
 			logo_uri: "https://kilocode.ai/logo.png",
 			redirect_uris: redirectUris,
