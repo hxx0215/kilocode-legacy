@@ -46,6 +46,8 @@ import { getChutesModels } from "./chutes"
 import { getNanoGptModels } from "./nano-gpt" //kilocode_change
 import { getPoeModels } from "./poe" // kilocode_change
 import { getZenmuxModels } from "./zenmux"
+import { getXaiSuperGrokModels } from "./xai-super-grok" // kilocode_change
+import { xaiSuperGrokModels } from "@roo-code/types" // kilocode_change
 
 const memoryCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 5 * 60 })
 
@@ -89,6 +91,9 @@ async function fetchModelsFromProvider(options: GetModelsOptions): Promise<Model
 				headers: options.apiKey ? { Authorization: `Bearer ${options.apiKey}` } : undefined,
 			})
 			// kilocode_change end
+			break
+		case "xai-super-grok": // kilocode_change
+			models = await getXaiSuperGrokModels() // kilocode_change
 			break
 		case "zenmux":
 			models = await getZenmuxModels({
@@ -266,6 +271,7 @@ export const getModels = async (options: GetModelsOptions): Promise<ModelRecord>
 		// Log the error and re-throw it so the caller can handle it (e.g., show a UI message).
 		console.error(`[getModels] Failed to fetch models in modelCache for ${provider}:`, error)
 
+		if (provider === "xai-super-grok") return { ...xaiSuperGrokModels } // kilocode_change
 		throw error // Re-throw the original error to be handled by the caller.
 	}
 }
@@ -327,7 +333,7 @@ export const refreshModels = async (options: GetModelsOptions): Promise<ModelRec
 		} catch (error) {
 			// Log the error for debugging, then return existing cache if available (graceful degradation)
 			console.error(`[refreshModels] Failed to refresh ${provider} models:`, error)
-			return getModelsFromCache(provider) || {}
+			return getModelsFromCache(provider) || (provider === "xai-super-grok" ? { ...xaiSuperGrokModels } : {}) // kilocode_change
 		} finally {
 			// Always clean up the in-flight tracking
 			inFlightRefresh.delete(provider)
@@ -351,6 +357,7 @@ export async function initializeModelCacheRefresh(): Promise<void> {
 		// Providers that work without API keys
 		const publicProviders: Array<{ provider: RouterName; options: GetModelsOptions }> = [
 			{ provider: "openrouter", options: { provider: "openrouter" } },
+			{ provider: "xai-super-grok", options: { provider: "xai-super-grok" } }, // kilocode_change
 			{ provider: "glama", options: { provider: "glama" } }, // kilocode_change
 			{ provider: "vercel-ai-gateway", options: { provider: "vercel-ai-gateway" } },
 			{ provider: "chutes", options: { provider: "chutes" } },
@@ -372,14 +379,19 @@ export async function initializeModelCacheRefresh(): Promise<void> {
 		]
 
 		// Refresh each provider in background (fire and forget)
-		for (const { options } of publicProviders) {
-			refreshModels(options).catch(() => {
-				// Silent fail - old cache remains available
-			})
+		const refreshPublicProviders = async () => {
+			for (const { options } of publicProviders) {
+				refreshModels(options).catch(() => {
+					// Silent fail - old cache remains available
+				})
 
-			// Small delay between refreshes to avoid API rate limits
-			await new Promise((resolve) => setTimeout(resolve, 500))
+				// Small delay between refreshes to avoid API rate limits
+				await new Promise((resolve) => setTimeout(resolve, 500))
+			}
 		}
+
+		await refreshPublicProviders()
+		setInterval(() => void refreshPublicProviders(), 60 * 60 * 1000)
 	}, 2000)
 }
 

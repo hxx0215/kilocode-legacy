@@ -656,6 +656,22 @@
 			"maxTokensLabel": "Token Output Maks",
 			"maxTokensDescription": "Jumlah maksimum token output untuk respons Claude Code. Default adalah 8000."
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "Gunakan langganan SuperGrok atau X Premium Anda melalui xAI OAuth. Akun ini disimpan secara global di VS Code Secret Storage.",
+			"connected": "Terhubung ke xAI",
+			"signOut": "Keluar",
+			"browserSignIn": "Masuk dengan browser",
+			"deviceSignIn": "Masuk jarak jauh / VPS",
+			"signInHint": "Masuk dengan browser menggunakan port callback lokal 56121. Gunakan masuk jarak jauh / VPS jika callback tidak dapat mencapai mesin ini.",
+			"browserWaiting": "Menunggu otorisasi browser selesai…",
+			"deviceWaiting": "Buka tautan verifikasi di perangkat apa pun, masukkan kode, dan biarkan halaman ini tetap terbuka.",
+			"copyLink": "Salin tautan",
+			"copyCode": "Salin kode",
+			"cancel": "Batalkan masuk",
+			"modelsSource": "Model dimuat dari katalog xAI di models.dev.",
+			"refreshModels": "Segarkan model"
+		},
 		"qwenCode": {
 			"oauthPath": "Jalur Kredensial OAuth (opsional)",
 			"oauthPathDescription": "Jalur ke file kredensial OAuth. Biarkan kosong untuk menggunakan lokasi default (~/.qwen/oauth_creds.json).",

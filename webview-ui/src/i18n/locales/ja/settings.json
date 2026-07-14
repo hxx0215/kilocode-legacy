@@ -661,6 +661,22 @@
 			"maxTokensLabel": "最大出力トークン",
 			"maxTokensDescription": "Claude Codeレスポンスの最大出力トークン数。デフォルトは8000です。"
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "xAI OAuth を介して SuperGrok または X Premium のサブスクリプションを使用します。このアカウントは VS Code Secret Storage にグローバルに保存されます。",
+			"connected": "xAI に接続済み",
+			"signOut": "サインアウト",
+			"browserSignIn": "ブラウザーでサインイン",
+			"deviceSignIn": "リモート / VPS サインイン",
+			"signInHint": "ブラウザーサインインではローカルコールバックポート 56121 を使用します。このマシンにコールバックできない場合は、リモート / VPS サインインを使用してください。",
+			"browserWaiting": "ブラウザーでの認証完了を待っています…",
+			"deviceWaiting": "任意のデバイスで確認リンクを開き、コードを入力して、このページを開いたままにしてください。",
+			"copyLink": "リンクをコピー",
+			"copyCode": "コードをコピー",
+			"cancel": "サインインをキャンセル",
+			"modelsSource": "モデルは models.dev の xAI カタログから読み込まれます。",
+			"refreshModels": "モデルを更新"
+		},
 		"qwenCode": {
 			"oauthPath": "OAuth認証情報パス（オプション）",
 			"oauthPathDescription": "OAuth認証情報ファイルへのパス。デフォルトの場所（~/.qwen/oauth_creds.json）を使用する場合は空のままにしてください。",

@@ -269,6 +269,7 @@ export interface ExtensionMessage {
 		| "skillsData"
 		| "askReviewScope" // kilocode_change: Review mode scope selection
 		| "openAiCodexRateLimits"
+		| "xaiSuperGrokAuthStatus" // kilocode_change
 	text?: string
 	// kilocode_change start
 	completionRequestId?: string // Correlation ID from request
@@ -668,6 +669,8 @@ export type ExtensionState = Pick<
 	showDiffStats?: boolean // kilocode_change: Show diff stats in task header
 	claudeCodeIsAuthenticated?: boolean
 	openAiCodexIsAuthenticated?: boolean
+	xaiSuperGrokIsAuthenticated?: boolean // kilocode_change
+	xaiSuperGrokEmail?: string // kilocode_change
 	debug?: boolean
 	speechToTextStatus?: { available: boolean; reason?: "openaiKeyMissing" | "ffmpegNotInstalled" } // kilocode_change: Speech-to-text availability status with failure reason
 	appendSystemPrompt?: string // kilocode_change: Custom text to append to system prompt (CLI only)
@@ -866,6 +869,11 @@ export interface WebviewMessage {
 		| "claudeCodeSignOut"
 		| "openAiCodexSignIn"
 		| "openAiCodexSignOut"
+		| "xaiSuperGrokBrowserSignIn" // kilocode_change
+		| "xaiSuperGrokDeviceSignIn" // kilocode_change
+		| "xaiSuperGrokCancelBrowserSignIn" // kilocode_change
+		| "xaiSuperGrokCancelDeviceSignIn" // kilocode_change
+		| "xaiSuperGrokSignOut" // kilocode_change
 		| "switchOrganization"
 		| "condenseTaskContextRequest"
 		| "requestIndexingStatus"

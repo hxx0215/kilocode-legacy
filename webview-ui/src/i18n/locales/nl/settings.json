@@ -656,6 +656,22 @@
 			"maxTokensLabel": "Max Output Tokens",
 			"maxTokensDescription": "Maximaal aantal output-tokens voor Claude Code-reacties. Standaard is 8000."
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "Gebruik je SuperGrok- of X Premium-abonnement via xAI OAuth. Dit account wordt globaal opgeslagen in VS Code Secret Storage.",
+			"connected": "Verbonden met xAI",
+			"signOut": "Afmelden",
+			"browserSignIn": "Aanmelden met browser",
+			"deviceSignIn": "Externe / VPS-aanmelding",
+			"signInHint": "Aanmelden via de browser gebruikt lokale callbackpoort 56121. Gebruik externe / VPS-aanmelding als de callback deze machine niet kan bereiken.",
+			"browserWaiting": "Wachten tot de browserautorisatie is voltooid…",
+			"deviceWaiting": "Open de verificatielink op een apparaat, voer de code in en houd deze pagina geopend.",
+			"copyLink": "Link kopiëren",
+			"copyCode": "Code kopiëren",
+			"cancel": "Aanmelding annuleren",
+			"modelsSource": "Modellen worden geladen uit de xAI-catalogus op models.dev.",
+			"refreshModels": "Modellen vernieuwen"
+		},
 		"qwenCode": {
 			"oauthPath": "OAuth-referentiepad (optioneel)",
 			"oauthPathDescription": "Pad naar het OAuth-referentiebestand. Laat leeg om de standaardlocatie te gebruiken (~/.qwen/oauth_creds.json).",

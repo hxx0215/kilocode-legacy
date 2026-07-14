@@ -713,6 +713,22 @@
 		"kilo_code_openrouter": {
 			"description": "Prístup k 200+ modelom cez OpenRouter s 1M kontextovým oknom"
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "Použite svoje predplatné SuperGrok alebo X Premium cez xAI OAuth. Tento účet sa globálne ukladá vo VS Code Secret Storage.",
+			"connected": "Pripojené k xAI",
+			"signOut": "Odhlásiť sa",
+			"browserSignIn": "Prihlásiť sa v prehliadači",
+			"deviceSignIn": "Vzdialené / VPS prihlásenie",
+			"signInHint": "Prihlásenie v prehliadači používa miestny port spätného volania 56121. Ak spätné volanie nemôže dosiahnuť tento počítač, použite vzdialené / VPS prihlásenie.",
+			"browserWaiting": "Čaká sa na dokončenie autorizácie v prehliadači…",
+			"deviceWaiting": "Otvorte overovací odkaz na ľubovoľnom zariadení, zadajte kód a nechajte túto stránku otvorenú.",
+			"copyLink": "Kopírovať odkaz",
+			"copyCode": "Kopírovať kód",
+			"cancel": "Zrušiť prihlásenie",
+			"modelsSource": "Modely sa načítavajú z katalógu xAI na models.dev.",
+			"refreshModels": "Obnoviť modely"
+		},
 		"qwenCode": {
 			"oauthPath": "Cesta k OAuth prihlasovacím údajom (voliteľné)",
 			"oauthPathDescription": "Cesta k súboru prihlasovacích údajov OAuth. Ponechajte prázdne pre použitie predvoleného umiestnenia (~/.qwen/oauth_creds.json).",

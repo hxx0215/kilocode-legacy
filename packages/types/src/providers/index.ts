@@ -42,6 +42,7 @@ export * from "./unbound.js"
 export * from "./vertex.js"
 export * from "./kilocode-vscode-llm.js"
 export * from "./xai.js"
+export * from "./xai-super-grok.js" // kilocode_change
 export * from "./vercel-ai-gateway.js"
 export * from "./zai.js"
 export * from "./deepinfra.js"
@@ -79,6 +80,7 @@ import { unboundDefaultModelId } from "./unbound.js"
 import { vertexDefaultModelId } from "./vertex.js"
 import { vscodeLlmDefaultModelId } from "./vscode-llm.js"
 import { xaiDefaultModelId } from "./xai.js"
+import { xaiSuperGrokDefaultModelId } from "./xai-super-grok.js" // kilocode_change
 import { vercelAiGatewayDefaultModelId } from "./vercel-ai-gateway.js"
 import { internationalZAiDefaultModelId, mainlandZAiDefaultModelId } from "./zai.js"
 import { deepInfraDefaultModelId } from "./deepinfra.js"
@@ -119,6 +121,8 @@ export function getProviderDefaultModelId(
 			return litellmDefaultModelId
 		case "xai":
 			return xaiDefaultModelId
+		case "xai-super-grok": // kilocode_change
+			return xaiSuperGrokDefaultModelId // kilocode_change
 		case "groq":
 			return groqDefaultModelId
 		case "huggingface":

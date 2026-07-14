@@ -24,6 +24,8 @@ import {
 	vertexModels,
 	normalizeVertexModelId, // kilocode_change
 	xaiModels,
+	xaiSuperGrokDefaultModelId, // kilocode_change
+	xaiSuperGrokModels, // kilocode_change
 	groqModels,
 	vscodeLlmModels,
 	vscodeLlmDefaultModelId,
@@ -597,6 +599,18 @@ function getSelectedModel({
 		case "zenmux": {
 			const id = getValidatedModelId(apiConfiguration.zenmuxModelId, routerModels.zenmux, defaultModelId)
 			const info = routerModels.zenmux?.[id]
+			return { id, info }
+		}
+		case "xai-super-grok": {
+			// kilocode_change
+			const models = routerModels["xai-super-grok"]
+			const fallbackId = models?.[xaiSuperGrokDefaultModelId]
+				? xaiSuperGrokDefaultModelId
+				: models?.["grok-4.3"]
+					? "grok-4.3"
+					: Object.keys(models ?? {})[0] || xaiSuperGrokDefaultModelId
+			const id = getValidatedModelId(apiConfiguration.apiModelId, models, fallbackId)
+			const info = models?.[id] ?? xaiSuperGrokModels[id as keyof typeof xaiSuperGrokModels]
 			return { id, info }
 		}
 		// kilocode_change end

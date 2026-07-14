@@ -23,6 +23,8 @@ import {
 	vertexModels,
 	xaiDefaultModelId,
 	xaiModels,
+	xaiSuperGrokDefaultModelId, // kilocode_change
+	xaiSuperGrokModels, // kilocode_change
 	groqModels,
 	groqDefaultModelId,
 	chutesDefaultModelId,
@@ -129,6 +131,18 @@ export const getModelsByProvider = ({
 			return {
 				models: xaiModels,
 				defaultModel: xaiDefaultModelId,
+			}
+		}
+		case "xai-super-grok": {
+			// kilocode_change
+			const models = routerModels["xai-super-grok"]
+			return {
+				models: Object.keys(models).length ? models : xaiSuperGrokModels,
+				defaultModel: models[xaiSuperGrokDefaultModelId]
+					? xaiSuperGrokDefaultModelId
+					: models["grok-4.3"]
+						? "grok-4.3"
+						: Object.keys(models)[0] || xaiSuperGrokDefaultModelId,
 			}
 		}
 		case "groq": {

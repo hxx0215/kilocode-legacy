@@ -656,6 +656,22 @@
 			"maxTokensLabel": "最大输出 Token",
 			"maxTokensDescription": "Claude Code 响应的最大输出 Token 数量。默认为 8000。"
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "通过 xAI OAuth 使用你的 SuperGrok 或 X Premium 订阅。此账号将全局保存在 VS Code Secret Storage 中。",
+			"connected": "已连接到 xAI",
+			"signOut": "退出登录",
+			"browserSignIn": "使用浏览器登录",
+			"deviceSignIn": "远程 / VPS 登录",
+			"signInHint": "浏览器登录使用本地回调端口 56121。当回调无法访问此设备时，请使用远程 / VPS 登录。",
+			"browserWaiting": "正在等待浏览器完成授权…",
+			"deviceWaiting": "请在任意设备上打开验证链接、输入代码，并保持此页面打开。",
+			"copyLink": "复制链接",
+			"copyCode": "复制代码",
+			"cancel": "取消登录",
+			"modelsSource": "模型从 models.dev 的 xAI 目录动态加载。",
+			"refreshModels": "刷新模型"
+		},
 		"qwenCode": {
 			"oauthPath": "OAuth 凭据路径（可选）",
 			"oauthPathDescription": "OAuth 凭据文件的路径。留空以使用默认位置（~/.qwen/oauth_creds.json）。",

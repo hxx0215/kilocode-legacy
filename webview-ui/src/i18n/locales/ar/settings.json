@@ -713,6 +713,22 @@
 		"kilo_code_openrouter": {
 			"description": "الوصول لأكثر من 200 نموذج عبر OpenRouter بنافذة سياق 1 مليون"
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "استخدم اشتراك SuperGrok أو X Premium عبر xAI OAuth. يُخزَّن هذا الحساب بشكل عام في VS Code Secret Storage.",
+			"connected": "متصل بـ xAI",
+			"signOut": "تسجيل الخروج",
+			"browserSignIn": "تسجيل الدخول عبر المتصفح",
+			"deviceSignIn": "تسجيل دخول عن بُعد / VPS",
+			"signInHint": "يستخدم تسجيل الدخول عبر المتصفح منفذ رد الاتصال المحلي 56121. استخدم تسجيل الدخول عن بُعد / VPS إذا تعذر وصول رد الاتصال إلى هذا الجهاز.",
+			"browserWaiting": "بانتظار اكتمال التفويض في المتصفح…",
+			"deviceWaiting": "افتح رابط التحقق على أي جهاز، وأدخل الرمز، واترك هذه الصفحة مفتوحة.",
+			"copyLink": "نسخ الرابط",
+			"copyCode": "نسخ الرمز",
+			"cancel": "إلغاء تسجيل الدخول",
+			"modelsSource": "يتم تحميل النماذج من كتالوج xAI على models.dev.",
+			"refreshModels": "تحديث النماذج"
+		},
 		"qwenCode": {
 			"oauthPath": "مسار بيانات OAuth (اختياري)",
 			"oauthPathDescription": "مسار ملف بيانات OAuth. اتركه فاضي لاستخدام المسار الافتراضي (~/.qwen/oauth_creds.json).",

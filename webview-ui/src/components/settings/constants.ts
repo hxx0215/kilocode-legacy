@@ -94,6 +94,7 @@ export const PROVIDERS = [
 	{ value: "requesty", label: "Requesty", proxy: false },
 	{ value: "human-relay", label: "Human Relay", proxy: false },
 	{ value: "xai", label: "xAI (Grok)", proxy: false },
+	{ value: "xai-super-grok", label: "SuperGrok / X Premium (OAuth)", proxy: false }, // kilocode_change
 	{ value: "groq", label: "Groq", proxy: false },
 	{ value: "huggingface", label: "Hugging Face", proxy: false },
 	{ value: "chutes", label: "Chutes AI", proxy: false },

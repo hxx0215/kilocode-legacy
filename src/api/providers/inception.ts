@@ -1,7 +1,7 @@
 // kilocode_change - file added
 
 import { ApiHandlerCreateMessageMetadata, SingleCompletionHandler } from ".."
-import { ApiHandlerOptions } from "../../shared/api"
+import { ApiHandlerOptions, type GetModelsOptions } from "../../shared/api" // kilocode_change
 import { calculateApiCostOpenAI } from "../../shared/cost"
 import { RouterProvider } from "./router-provider"
 
@@ -97,7 +97,11 @@ export class InceptionLabsHandler extends RouterProvider implements SingleComple
 	}
 
 	public override async fetchModel() {
-		this.models = await getModels({ provider: this.name, apiKey: this.client.apiKey, baseUrl: this.client.baseURL })
+		this.models = await getModels({
+			provider: this.name,
+			apiKey: this.client.apiKey,
+			baseUrl: this.client.baseURL,
+		} as GetModelsOptions) // kilocode_change
 		return this.getModel()
 	}
 

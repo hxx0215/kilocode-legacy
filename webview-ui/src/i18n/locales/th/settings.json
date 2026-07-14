@@ -673,6 +673,22 @@
 		"kilo_code_openrouter": {
 			"description": "เข้าถึงมากกว่า 200 โมเดลผ่าน OpenRouter ด้วยหน้าต่างบริบท 1M"
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "ใช้การสมัครสมาชิก SuperGrok หรือ X Premium ผ่าน xAI OAuth บัญชีนี้จะถูกจัดเก็บแบบส่วนกลางใน VS Code Secret Storage",
+			"connected": "เชื่อมต่อกับ xAI แล้ว",
+			"signOut": "ออกจากระบบ",
+			"browserSignIn": "เข้าสู่ระบบด้วยเบราว์เซอร์",
+			"deviceSignIn": "เข้าสู่ระบบระยะไกล / VPS",
+			"signInHint": "การเข้าสู่ระบบด้วยเบราว์เซอร์ใช้พอร์ต callback ภายในเครื่อง 56121 หาก callback เข้าถึงเครื่องนี้ไม่ได้ ให้ใช้การเข้าสู่ระบบระยะไกล / VPS",
+			"browserWaiting": "กำลังรอให้การอนุญาตในเบราว์เซอร์เสร็จสิ้น…",
+			"deviceWaiting": "เปิดลิงก์ยืนยันบนอุปกรณ์ใดก็ได้ ป้อนรหัส และเปิดหน้านี้ค้างไว้",
+			"copyLink": "คัดลอกลิงก์",
+			"copyCode": "คัดลอกรหัส",
+			"cancel": "ยกเลิกการเข้าสู่ระบบ",
+			"modelsSource": "โมเดลถูกโหลดจากแค็ตตาล็อก xAI บน models.dev",
+			"refreshModels": "รีเฟรชโมเดล"
+		},
 		"qwenCode": {
 			"oauthPath": "เส้นทางข้อมูลประจำตัว OAuth (ไม่บังคับ)",
 			"oauthPathDescription": "เส้นทางไปยังไฟล์ข้อมูลประจำตัว OAuth ปล่อยว่างไว้เพื่อใช้ตำแหน่งเริ่มต้น (~/.qwen/oauth_creds.json)",

@@ -47,6 +47,7 @@ describe("getModelsByProvider", () => {
 		poe: { "test-model": testModel },
 		aihubmix: { "test-model": testModel }, // kilocode_change
 		zenmux: { "test-model": testModel },
+		"xai-super-grok": { "test-model": testModel }, // kilocode_change
 	}
 
 	it("returns models for all providers", () => {

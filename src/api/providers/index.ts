@@ -43,6 +43,7 @@ export { ApertisHandler } from "./apertis"
 // kilocode_change end
 export { VsCodeLmHandler } from "./vscode-lm"
 export { XAIHandler } from "./xai"
+export { XaiSuperGrokHandler } from "./xai-super-grok" // kilocode_change
 export { ZAiHandler } from "./zai"
 export { FireworksHandler } from "./fireworks"
 export { RooHandler } from "./roo"

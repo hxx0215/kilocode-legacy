@@ -30,6 +30,7 @@ If you prefer to use your own API key or existing subscription, Kilo Code suppor
 | Provider                                                       | Best For                            | API Key Required |
 | -------------------------------------------------------------- | ----------------------------------- | ---------------- |
 | [ChatGPT Plus/Pro](../ai-providers/openai-chatgpt-plus-pro.md) | Use your existing subscription      | No               |
+| [SuperGrok / X Premium](../ai-providers/xai-super-grok.md)     | Use an eligible xAI subscription    | No               |
 | [OpenRouter](../ai-providers/openrouter.md)                    | Access multiple models with one key | Yes              |
 | [Anthropic](../ai-providers/anthropic.md)                      | Direct access to Claude models      | Yes              |
 | [OpenAI](../ai-providers/openai.md)                            | Access to GPT models                | Yes              |
@@ -40,6 +41,10 @@ If you prefer to use your own API key or existing subscription, Kilo Code suppor
 ### ChatGPT Plus/Pro Subscription
 
 Already have a ChatGPT subscription? You can use it with Kilo Code through the [OpenAI ChatGPT provider](../ai-providers/openai-chatgpt-plus-pro.md)—no API key needed.
+
+### SuperGrok / X Premium Subscription
+
+If your xAI account has an eligible SuperGrok or X Premium subscription, select **SuperGrok / X Premium (OAuth)** and use either browser sign-in or the Remote / VPS device flow. See the [subscription provider guide](../ai-providers/xai-super-grok.md) for details.
 
 ### OpenRouter
 

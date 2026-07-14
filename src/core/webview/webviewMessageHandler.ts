@@ -942,6 +942,7 @@ export const webviewMessageHandler = async (
 						poe: {}, // kilocode_change
 						aihubmix: {}, // kilocode_change
 						zenmux: {},
+						"xai-super-grok": {}, // kilocode_change
 					}
 			const safeGetModels = async (options: GetModelsOptions): Promise<ModelRecord> => {
 				try {
@@ -966,6 +967,7 @@ export const webviewMessageHandler = async (
 					key: "openrouter",
 					options: { provider: "openrouter", apiKey: openRouterApiKey, baseUrl: openRouterBaseUrl },
 				},
+				{ key: "xai-super-grok", options: { provider: "xai-super-grok" } }, // kilocode_change
 				{
 					key: "gemini",
 					options: {
@@ -3346,6 +3348,104 @@ export const webviewMessageHandler = async (
 			}
 			break
 		}
+		// kilocode_change start
+		case "xaiSuperGrokBrowserSignIn": {
+			try {
+				const { xaiSuperGrokOAuthManager } = await import("../../integrations/xai-super-grok/oauth")
+				const authorization = await xaiSuperGrokOAuthManager.startBrowserAuthorization()
+				await provider.postMessageToWebview({
+					type: "xaiSuperGrokAuthStatus",
+					values: { phase: "browser-waiting", authorizationUrl: authorization.authorizationUrl },
+				})
+				void authorization.completion
+					.then(async () => {
+						await provider.postMessageToWebview({
+							type: "xaiSuperGrokAuthStatus",
+							values: { phase: "authenticated" },
+						})
+						vscode.window.showInformationMessage("Signed in to SuperGrok / X Premium")
+						await provider.postStateToWebview()
+					})
+					.catch(async (error) => {
+						await provider.postMessageToWebview({
+							type: "xaiSuperGrokAuthStatus",
+							values: { phase: "error", error: error instanceof Error ? error.message : String(error) },
+						})
+					})
+				await vscode.env.openExternal(vscode.Uri.parse(authorization.authorizationUrl))
+			} catch (error) {
+				const message = error instanceof Error ? error.message : String(error)
+				provider.log(`xAI SuperGrok browser OAuth failed: ${message}`)
+				await provider.postMessageToWebview({
+					type: "xaiSuperGrokAuthStatus",
+					values: { phase: "error", error: message },
+				})
+			}
+			break
+		}
+		case "xaiSuperGrokDeviceSignIn": {
+			try {
+				const { xaiSuperGrokOAuthManager } = await import("../../integrations/xai-super-grok/oauth")
+				const authorization = await xaiSuperGrokOAuthManager.startDeviceAuthorization()
+				await provider.postMessageToWebview({
+					type: "xaiSuperGrokAuthStatus",
+					values: { phase: "device-waiting", ...authorization.info },
+				})
+				void authorization.completion
+					.then(async () => {
+						await provider.postMessageToWebview({
+							type: "xaiSuperGrokAuthStatus",
+							values: { phase: "authenticated" },
+						})
+						vscode.window.showInformationMessage("Signed in to SuperGrok / X Premium")
+						await provider.postStateToWebview()
+					})
+					.catch(async (error) => {
+						await provider.postMessageToWebview({
+							type: "xaiSuperGrokAuthStatus",
+							values: { phase: "error", error: error instanceof Error ? error.message : String(error) },
+						})
+					})
+				await vscode.env.openExternal(
+					vscode.Uri.parse(authorization.info.verificationUriComplete ?? authorization.info.verificationUri),
+				)
+			} catch (error) {
+				const message = error instanceof Error ? error.message : String(error)
+				provider.log(`xAI SuperGrok device OAuth failed: ${message}`)
+				await provider.postMessageToWebview({
+					type: "xaiSuperGrokAuthStatus",
+					values: { phase: "error", error: message },
+				})
+			}
+			break
+		}
+		case "xaiSuperGrokCancelBrowserSignIn": {
+			const { xaiSuperGrokOAuthManager } = await import("../../integrations/xai-super-grok/oauth")
+			xaiSuperGrokOAuthManager.cancelBrowserAuthorization()
+			await provider.postMessageToWebview({ type: "xaiSuperGrokAuthStatus", values: { phase: "idle" } })
+			break
+		}
+		case "xaiSuperGrokCancelDeviceSignIn": {
+			const { xaiSuperGrokOAuthManager } = await import("../../integrations/xai-super-grok/oauth")
+			xaiSuperGrokOAuthManager.cancelDeviceAuthorization()
+			await provider.postMessageToWebview({ type: "xaiSuperGrokAuthStatus", values: { phase: "idle" } })
+			break
+		}
+		case "xaiSuperGrokSignOut": {
+			try {
+				const { xaiSuperGrokOAuthManager } = await import("../../integrations/xai-super-grok/oauth")
+				xaiSuperGrokOAuthManager.cancelBrowserAuthorization()
+				xaiSuperGrokOAuthManager.cancelDeviceAuthorization()
+				await xaiSuperGrokOAuthManager.clearCredentials()
+				await provider.postMessageToWebview({ type: "xaiSuperGrokAuthStatus", values: { phase: "idle" } })
+				await provider.postStateToWebview()
+			} catch (error) {
+				provider.log(`xAI SuperGrok sign out failed: ${String(error)}`)
+				vscode.window.showErrorMessage("SuperGrok / X Premium sign out failed.")
+			}
+			break
+		}
+		// kilocode_change end
 		case "rooCloudManualUrl": {
 			try {
 				if (!message.text) {

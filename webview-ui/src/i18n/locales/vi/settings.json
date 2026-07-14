@@ -656,6 +656,22 @@
 			"maxTokensLabel": "Số token đầu ra tối đa",
 			"maxTokensDescription": "Số lượng token đầu ra tối đa cho các phản hồi của Claude Code. Mặc định là 8000."
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "Sử dụng gói đăng ký SuperGrok hoặc X Premium qua xAI OAuth. Tài khoản này được lưu toàn cục trong VS Code Secret Storage.",
+			"connected": "Đã kết nối với xAI",
+			"signOut": "Đăng xuất",
+			"browserSignIn": "Đăng nhập bằng trình duyệt",
+			"deviceSignIn": "Đăng nhập từ xa / VPS",
+			"signInHint": "Đăng nhập bằng trình duyệt sử dụng cổng callback cục bộ 56121. Hãy dùng đăng nhập từ xa / VPS khi callback không thể truy cập máy này.",
+			"browserWaiting": "Đang chờ hoàn tất ủy quyền trong trình duyệt…",
+			"deviceWaiting": "Mở liên kết xác minh trên thiết bị bất kỳ, nhập mã và giữ trang này mở.",
+			"copyLink": "Sao chép liên kết",
+			"copyCode": "Sao chép mã",
+			"cancel": "Hủy đăng nhập",
+			"modelsSource": "Các mô hình được tải từ danh mục xAI trên models.dev.",
+			"refreshModels": "Làm mới mô hình"
+		},
 		"qwenCode": {
 			"oauthPath": "Đường dẫn Thông tin xác thực OAuth (tùy chọn)",
 			"oauthPathDescription": "Đường dẫn đến tệp thông tin xác thực OAuth. Để trống để sử dụng vị trí mặc định (~/.qwen/oauth_creds.json).",

@@ -630,6 +630,22 @@
 			"maxTokensLabel": "Maksimum Çıktı Token sayısı",
 			"maxTokensDescription": "Claude Code yanıtları için maksimum çıktı token sayısı. Varsayılan 8000'dir."
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "SuperGrok veya X Premium aboneliğinizi xAI OAuth üzerinden kullanın. Bu hesap VS Code Secret Storage içinde genel olarak saklanır.",
+			"connected": "xAI bağlantısı kuruldu",
+			"signOut": "Çıkış yap",
+			"browserSignIn": "Tarayıcıyla giriş yap",
+			"deviceSignIn": "Uzak / VPS girişi",
+			"signInHint": "Tarayıcı girişi yerel geri çağırma bağlantı noktası 56121’i kullanır. Geri çağırma bu makineye ulaşamıyorsa Uzak / VPS girişini kullanın.",
+			"browserWaiting": "Tarayıcı yetkilendirmesinin tamamlanması bekleniyor…",
+			"deviceWaiting": "Doğrulama bağlantısını herhangi bir cihazda açın, kodu girin ve bu sayfayı açık tutun.",
+			"copyLink": "Bağlantıyı kopyala",
+			"copyCode": "Kodu kopyala",
+			"cancel": "Girişi iptal et",
+			"modelsSource": "Modeller models.dev üzerindeki xAI kataloğundan yüklenir.",
+			"refreshModels": "Modelleri yenile"
+		},
 		"qwenCode": {
 			"oauthPath": "OAuth Kimlik Bilgileri Yolu (isteğe bağlı)",
 			"oauthPathDescription": "OAuth kimlik bilgileri dosyasının yolu. Varsayılan konumu kullanmak için boş bırakın (~/.qwen/oauth_creds.json).",

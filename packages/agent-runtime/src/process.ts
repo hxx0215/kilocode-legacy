@@ -49,6 +49,10 @@
 import { createExtensionService, type ExtensionService } from "./services/extension.js"
 import { logs, setLogger, createIPCLogger } from "./utils/logger.js"
 import type { ExtensionMessage, WebviewMessage, ExtensionState, ModeConfig, ProviderSettings } from "./types/index.js"
+import {
+	XaiSuperGrokTokenBrokerClient,
+	type XaiSuperGrokTokenResponseMessage,
+} from "./services/xai-super-grok-token-broker.js" // kilocode_change
 
 /**
  * Agent configuration passed via AGENT_CONFIG environment variable
@@ -137,18 +141,23 @@ interface ResumeSessionData {
  * IPC message types from parent
  */
 interface ParentMessage {
-	type: "sendMessage" | "shutdown" | "injectConfig" | "resumeWithHistory"
+	type: "sendMessage" | "shutdown" | "injectConfig" | "resumeWithHistory" | "xaiSuperGrokTokenResponse" // kilocode_change
 	payload?: WebviewMessage | Partial<ExtensionState> | ResumeSessionData
+	requestId?: string // kilocode_change
+	accessToken?: string // kilocode_change
+	error?: string // kilocode_change
 }
 
 /**
  * IPC message types to parent
  */
 interface ChildMessage {
-	type: "ready" | "message" | "stateChange" | "error" | "warning"
+	type: "ready" | "message" | "stateChange" | "error" | "warning" | "xaiSuperGrokTokenRequest" // kilocode_change
 	payload?: ExtensionMessage
 	state?: ExtensionState
 	error?: { message: string; stack?: string; context?: string }
+	requestId?: string // kilocode_change
+	forceRefresh?: boolean // kilocode_change
 }
 
 /**
@@ -249,6 +258,18 @@ async function main(): Promise<void> {
 		})
 		process.exit(1)
 	}
+
+	// kilocode_change start
+	// Install a process-local access-token provider before the extension bundle loads.
+	// Requests cross IPC to the main extension; refresh credentials never enter AGENT_CONFIG.
+	const tokenBroker = new XaiSuperGrokTokenBrokerClient((message) => sendToParent(message))
+	tokenBroker.install()
+	process.on("message", (message: ParentMessage) => {
+		if (message.type === "xaiSuperGrokTokenResponse" && message.requestId) {
+			tokenBroker.handleResponse(message as XaiSuperGrokTokenResponseMessage)
+		}
+	})
+	// kilocode_change end
 
 	const customModeSlugs = config.customModes?.map((m) => m.slug).join(", ") || "none"
 	logs.info("Starting agent process", "AgentProcess", {
@@ -403,6 +424,10 @@ async function main(): Promise<void> {
 
 			try {
 				switch (msg.type) {
+					case "xaiSuperGrokTokenResponse":
+						// Handled by the early broker listener installed before extension activation.
+						break
+
 					case "sendMessage":
 						if (msg.payload && agent) {
 							logs.debug(`[Ext→] sendWebviewMessage(${payloadType})`, "AgentProcess")
@@ -474,6 +499,7 @@ async function main(): Promise<void> {
 
 					case "shutdown":
 						logs.info("Received shutdown signal", "AgentProcess")
+						tokenBroker.dispose() // kilocode_change
 						if (agent) {
 							await agent.dispose()
 						}
@@ -498,6 +524,7 @@ async function main(): Promise<void> {
 		// Handle process termination
 		process.on("SIGTERM", async () => {
 			logs.info("Received SIGTERM", "AgentProcess")
+			tokenBroker.dispose() // kilocode_change
 			if (agent) {
 				await agent.dispose()
 			}
@@ -506,12 +533,14 @@ async function main(): Promise<void> {
 
 		process.on("SIGINT", async () => {
 			logs.info("Received SIGINT", "AgentProcess")
+			tokenBroker.dispose() // kilocode_change
 			if (agent) {
 				await agent.dispose()
 			}
 			process.exit(0)
 		})
 	} catch (error) {
+		tokenBroker.dispose() // kilocode_change
 		logs.error("Failed to start agent", "AgentProcess", { error })
 		sendToParent({
 			type: "error",

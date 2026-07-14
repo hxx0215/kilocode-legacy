@@ -3,7 +3,7 @@ import OpenAI from "openai"
 
 import { deepInfraDefaultModelId, deepInfraDefaultModelInfo } from "@roo-code/types"
 
-import type { ApiHandlerOptions } from "../../shared/api"
+import type { ApiHandlerOptions, GetModelsOptions } from "../../shared/api" // kilocode_change
 import { calculateApiCostOpenAI } from "../../shared/cost"
 
 import { ApiStream, ApiStreamUsageChunk } from "../transform/stream"
@@ -34,7 +34,11 @@ export class DeepInfraHandler extends RouterProvider implements SingleCompletion
 	}
 
 	public override async fetchModel() {
-		this.models = await getModels({ provider: this.name, apiKey: this.client.apiKey, baseUrl: this.client.baseURL })
+		this.models = await getModels({
+			provider: this.name,
+			apiKey: this.client.apiKey,
+			baseUrl: this.client.baseURL,
+		} as GetModelsOptions) // kilocode_change
 		return this.getModel()
 	}
 

@@ -199,6 +199,7 @@ const dynamicProviderExtras = {
 	gemini: {} as { apiKey?: string; baseUrl?: string }, // kilocode_change
 	openrouter: {} as {}, // eslint-disable-line @typescript-eslint/no-empty-object-type
 	zenmux: {} as { apiKey?: string; baseUrl?: string },
+	"xai-super-grok": {} as Record<never, never>, // kilocode_change
 	"vercel-ai-gateway": {} as {}, // eslint-disable-line @typescript-eslint/no-empty-object-type
 	huggingface: {} as {}, // eslint-disable-line @typescript-eslint/no-empty-object-type
 	litellm: {} as { apiKey?: string; baseUrl?: string }, // kilocode_change: parameters optional

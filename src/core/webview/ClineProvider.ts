@@ -2572,6 +2572,24 @@ export class ClineProvider
 					return false
 				}
 			})(),
+			xaiSuperGrokIsAuthenticated: await (async () => {
+				try {
+					const { xaiSuperGrokOAuthManager } = await import("../../integrations/xai-super-grok/oauth")
+					return await xaiSuperGrokOAuthManager.isAuthenticated()
+				} catch (error) {
+					this.log(`[xai-super-grok-oauth] Authentication check failed: ${String(error)}`)
+					return false
+				}
+			})(), // kilocode_change
+			xaiSuperGrokEmail: await (async () => {
+				try {
+					const { xaiSuperGrokOAuthManager } = await import("../../integrations/xai-super-grok/oauth")
+					return await xaiSuperGrokOAuthManager.getEmail()
+				} catch (error) {
+					this.log(`[xai-super-grok-oauth] Email lookup failed: ${String(error)}`)
+					return undefined
+				}
+			})(), // kilocode_change
 			debug: vscode.workspace.getConfiguration(Package.name).get<boolean>("debug", false),
 		}
 	}

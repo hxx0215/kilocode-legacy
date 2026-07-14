@@ -92,6 +92,7 @@ describe("Model Validation Functions", () => {
 		chutes: {},
 		poe: {}, // kilocode_change
 		zenmux: {},
+		"xai-super-grok": {}, // kilocode_change
 	}
 
 	const allowAllOrganization: OrganizationAllowList = {

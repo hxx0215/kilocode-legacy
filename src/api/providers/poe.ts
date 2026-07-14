@@ -11,7 +11,7 @@ import {
 	NATIVE_TOOL_DEFAULTS,
 } from "@roo-code/types"
 
-import type { ApiHandlerOptions } from "../../shared/api"
+import type { ApiHandlerOptions, GetModelsOptions } from "../../shared/api" // kilocode_change
 import { calculateApiCostOpenAI } from "../../shared/cost"
 
 import { ApiStream, ApiStreamUsageChunk } from "../transform/stream"
@@ -48,7 +48,7 @@ export class PoeHandler extends RouterProvider implements SingleCompletionHandle
 	}
 
 	public override async fetchModel() {
-		this.models = await getModels({ provider: this.name, apiKey: this.client.apiKey })
+		this.models = await getModels({ provider: this.name, apiKey: this.client.apiKey } as GetModelsOptions) // kilocode_change
 		return this.getModel()
 	}
 

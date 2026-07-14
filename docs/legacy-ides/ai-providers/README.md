@@ -47,4 +47,5 @@
 - [Virtual Quota Fallback](virtual-quota-fallback.md)
 - [Vscode Lm](vscode-lm.md)
 - [Xai](xai.md)
+- [SuperGrok / X Premium (OAuth)](xai-super-grok.md)
 - [Zenmux](zenmux.md)

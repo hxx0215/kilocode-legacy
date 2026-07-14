@@ -656,6 +656,22 @@
 			"maxTokensLabel": "최대 출력 토큰",
 			"maxTokensDescription": "Claude Code 응답의 최대 출력 토큰 수. 기본값은 8000입니다."
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "xAI OAuth를 통해 SuperGrok 또는 X Premium 구독을 사용합니다. 이 계정은 VS Code Secret Storage에 전역으로 저장됩니다.",
+			"connected": "xAI에 연결됨",
+			"signOut": "로그아웃",
+			"browserSignIn": "브라우저로 로그인",
+			"deviceSignIn": "원격 / VPS 로그인",
+			"signInHint": "브라우저 로그인은 로컬 콜백 포트 56121을 사용합니다. 콜백이 이 컴퓨터에 도달할 수 없으면 원격 / VPS 로그인을 사용하세요.",
+			"browserWaiting": "브라우저 인증이 완료되기를 기다리는 중…",
+			"deviceWaiting": "아무 기기에서나 인증 링크를 열고 코드를 입력한 뒤 이 페이지를 열어 두세요.",
+			"copyLink": "링크 복사",
+			"copyCode": "코드 복사",
+			"cancel": "로그인 취소",
+			"modelsSource": "모델은 models.dev의 xAI 카탈로그에서 불러옵니다.",
+			"refreshModels": "모델 새로 고침"
+		},
 		"qwenCode": {
 			"oauthPath": "OAuth 자격 증명 경로 (선택사항)",
 			"oauthPathDescription": "OAuth 자격 증명 파일의 경로입니다. 기본 위치(~/.qwen/oauth_creds.json)를 사용하려면 비워두세요.",

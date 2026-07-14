@@ -711,6 +711,22 @@
 		"kilo_code_openrouter": {
 			"description": "Доступ до 200+ моделей через OpenRouter з контекстним вікном 1M"
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "Використовуйте підписку SuperGrok або X Premium через xAI OAuth. Цей обліковий запис зберігається глобально у VS Code Secret Storage.",
+			"connected": "Підключено до xAI",
+			"signOut": "Вийти",
+			"browserSignIn": "Увійти через браузер",
+			"deviceSignIn": "Віддалений вхід / VPS",
+			"signInHint": "Вхід через браузер використовує локальний порт зворотного виклику 56121. Якщо зворотний виклик не може дістатися цього комп’ютера, скористайтеся віддаленим входом / VPS.",
+			"browserWaiting": "Очікування завершення авторизації в браузері…",
+			"deviceWaiting": "Відкрийте посилання підтвердження на будь-якому пристрої, введіть код і не закривайте цю сторінку.",
+			"copyLink": "Копіювати посилання",
+			"copyCode": "Копіювати код",
+			"cancel": "Скасувати вхід",
+			"modelsSource": "Моделі завантажуються з каталогу xAI на models.dev.",
+			"refreshModels": "Оновити моделі"
+		},
 		"qwenCode": {
 			"oauthPath": "Шлях до облікових даних OAuth (необов'язково)",
 			"oauthPathDescription": "Шлях до файлу облікових даних OAuth. Залиште порожнім для використання місця за замовчуванням (~/.qwen/oauth_creds.json).",

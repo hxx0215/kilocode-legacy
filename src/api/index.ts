@@ -30,6 +30,7 @@ import {
 	HumanRelayHandler,
 	FakeAIHandler,
 	XAIHandler,
+	XaiSuperGrokHandler, // kilocode_change
 	GroqHandler,
 	HuggingFaceHandler,
 	ChutesHandler,
@@ -245,6 +246,8 @@ export function buildApiHandler(configuration: ProviderSettings): ApiHandler {
 			return new FakeAIHandler(options)
 		case "xai":
 			return new XAIHandler(options)
+		case "xai-super-grok": // kilocode_change
+			return new XaiSuperGrokHandler(options) // kilocode_change
 		case "groq":
 			return new GroqHandler(options)
 		case "deepinfra":

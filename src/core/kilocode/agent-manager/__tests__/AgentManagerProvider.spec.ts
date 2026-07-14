@@ -5,6 +5,7 @@ import * as telemetry from "../telemetry"
 
 const isWindows = process.platform === "win32"
 const MOCK_CLI_PATH = isWindows ? "C:\\mock\\path\\to\\kilocode" : "/mock/path/to/kilocode"
+const mockGetXaiSuperGrokAccessToken = vi.fn()
 
 // Mock the local telemetry module
 vi.mock("../telemetry", () => ({
@@ -47,6 +48,7 @@ describe("AgentManagerProvider CLI spawning", () => {
 
 	beforeEach(async () => {
 		vi.resetModules()
+		mockGetXaiSuperGrokAccessToken.mockReset().mockResolvedValue("short-lived-xai-access-token")
 
 		const mockWorkspaceFolder = { uri: { fsPath: "/tmp/workspace" } }
 		const mockProvider = {
@@ -74,6 +76,10 @@ describe("AgentManagerProvider CLI spawning", () => {
 		vi.doMock("../CliInstaller", () => ({
 			getLocalCliPath: () => MOCK_CLI_PATH,
 			canInstallCli: () => false,
+		}))
+
+		vi.doMock("../../../../integrations/xai-super-grok/oauth", () => ({
+			xaiSuperGrokOAuthManager: { getAccessToken: mockGetXaiSuperGrokAccessToken },
 		}))
 
 		// Mock fileExistsAtPath to return true only for MOCK_CLI_PATH
@@ -157,6 +163,37 @@ describe("AgentManagerProvider CLI spawning", () => {
 		expect(entryPath).toBeDefined()
 		// Options should include IPC stdio configuration
 		expect(options?.stdio).toContain("ipc")
+	})
+
+	it("brokers SuperGrok access tokens without putting refresh credentials in AGENT_CONFIG", async () => {
+		;(provider as any).provider.getState.mockResolvedValue({
+			apiConfiguration: { apiProvider: "xai-super-grok", apiModelId: "grok-4.5" },
+		})
+		await (provider as any).startAgentSession("test SuperGrok broker")
+
+		const forkMock = (await import("node:child_process")).fork as unknown as Mock
+		const proc = forkMock.mock.results[0].value as EventEmitter & { send: Mock }
+		const options = forkMock.mock.calls[0][2] as { env: Record<string, string> }
+		const agentConfig = JSON.parse(options.env.AGENT_CONFIG)
+		expect(agentConfig.providerSettings.apiProvider).toBe("xai-super-grok")
+		expect(agentConfig).not.toHaveProperty("secrets")
+
+		proc.emit("message", {
+			type: "xaiSuperGrokTokenRequest",
+			requestId: "request-1",
+			forceRefresh: true,
+		})
+		await vi.waitFor(() => expect(mockGetXaiSuperGrokAccessToken).toHaveBeenCalledWith(true))
+		await vi.waitFor(() =>
+			expect(proc.send).toHaveBeenCalledWith(
+				expect.objectContaining({
+					type: "xaiSuperGrokTokenResponse",
+					requestId: "request-1",
+					accessToken: "short-lived-xai-access-token",
+				}),
+				expect.any(Function),
+			),
+		)
 	})
 
 	it("creates pending session and waits for session_created event", async () => {

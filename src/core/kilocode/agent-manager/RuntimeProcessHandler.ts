@@ -36,7 +36,7 @@ const PENDING_SESSION_TIMEOUT_MS = 30_000
  * IPC messages from the agent process
  */
 interface AgentIPCMessage {
-	type: "ready" | "message" | "stateChange" | "error" | "warning" | "log"
+	type: "ready" | "message" | "stateChange" | "error" | "warning" | "log" | "xaiSuperGrokTokenRequest" // kilocode_change
 	payload?: unknown
 	state?: unknown
 	error?: { message: string; stack?: string; context?: string }
@@ -44,14 +44,19 @@ interface AgentIPCMessage {
 	message?: string
 	context?: string
 	meta?: Record<string, unknown>
+	requestId?: string // kilocode_change
+	forceRefresh?: boolean // kilocode_change
 }
 
 /**
  * IPC messages to the agent process
  */
 interface ParentIPCMessage {
-	type: "sendMessage" | "shutdown" | "injectConfig" | "resumeWithHistory"
+	type: "sendMessage" | "shutdown" | "injectConfig" | "resumeWithHistory" | "xaiSuperGrokTokenResponse" // kilocode_change
 	payload?: unknown
+	requestId?: string // kilocode_change
+	accessToken?: string // kilocode_change
+	error?: string // kilocode_change
 }
 
 /**
@@ -136,6 +141,7 @@ export class RuntimeProcessHandler {
 		private readonly callbacks: RuntimeProcessHandlerCallbacks,
 		private readonly extensionPath?: string,
 		vscodeAppRoot?: string,
+		private readonly resolveXaiSuperGrokAccessToken?: (forceRefresh: boolean) => Promise<string | undefined>, // kilocode_change
 	) {
 		this.vscodeAppRoot = vscodeAppRoot
 	}
@@ -442,6 +448,10 @@ export class RuntimeProcessHandler {
 		}
 
 		switch (msg.type) {
+			case "xaiSuperGrokTokenRequest": // kilocode_change
+				void this.handleXaiSuperGrokTokenRequest(proc, msg) // kilocode_change
+				break
+
 			case "ready":
 				this.handleAgentReady(proc, onEvent)
 				break
@@ -463,6 +473,35 @@ export class RuntimeProcessHandler {
 				break
 		}
 	}
+
+	// kilocode_change start
+	private async handleXaiSuperGrokTokenRequest(proc: ChildProcess, message: AgentIPCMessage): Promise<void> {
+		if (!message.requestId) {
+			this.callbacks.onLog("[AgentManager] Ignoring SuperGrok token request without requestId")
+			return
+		}
+
+		const response: ParentIPCMessage = {
+			type: "xaiSuperGrokTokenResponse",
+			requestId: message.requestId,
+		}
+		try {
+			if (!this.resolveXaiSuperGrokAccessToken) {
+				throw new Error("SuperGrok token broker is unavailable")
+			}
+			const accessToken = await this.resolveXaiSuperGrokAccessToken(message.forceRefresh === true)
+			if (!accessToken) throw new Error("Not authenticated with SuperGrok / X Premium")
+			response.accessToken = accessToken
+		} catch (error) {
+			response.error = error instanceof Error ? error.message : String(error)
+		}
+
+		if (proc.connected === false) return
+		proc.send(response, (error) => {
+			if (error) this.callbacks.onLog(`[AgentManager] Failed to send SuperGrok token response: ${error.message}`)
+		})
+	}
+	// kilocode_change end
 
 	/**
 	 * Summarize payload for logging (avoid huge dumps)

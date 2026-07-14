@@ -48,6 +48,7 @@ import { openImage } from "../../../integrations/misc/image-handler"
 import { getModelsFromCache } from "../../../api/providers/fetchers/modelCache"
 import { isRouterName, type ModelRecord } from "../../../shared/api"
 import { OPENAI_CODEX_CREDENTIALS_KEY } from "../../../integrations/openai-codex/oauth"
+import { xaiSuperGrokOAuthManager } from "../../../integrations/xai-super-grok/oauth" // kilocode_change
 
 /**
  * Message format for sending responses to the agent runtime via IPC.
@@ -222,7 +223,13 @@ export class AgentManagerProvider implements vscode.Disposable {
 		const extensionPath = this.context.extensionUri.fsPath
 		// Pass VS Code app root for finding bundled binaries (ripgrep, etc.)
 		const vscodeAppRoot = vscode.env.appRoot
-		this.processHandler = new RuntimeProcessHandler(this.registry, callbacks, extensionPath, vscodeAppRoot)
+		this.processHandler = new RuntimeProcessHandler(
+			this.registry,
+			callbacks,
+			extensionPath,
+			vscodeAppRoot,
+			(forceRefresh) => xaiSuperGrokOAuthManager.getAccessToken(forceRefresh),
+		) // kilocode_change
 		this.eventProcessor = new KilocodeEventProcessor({
 			processHandler: this.processHandler,
 			registry: this.registry,

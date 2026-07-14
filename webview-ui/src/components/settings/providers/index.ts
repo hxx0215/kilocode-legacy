@@ -29,6 +29,7 @@ export { Unbound } from "./Unbound"
 export { Vertex } from "./Vertex"
 export { VSCodeLM } from "./VSCodeLM"
 export { XAI } from "./XAI"
+export { XaiSuperGrok } from "./XaiSuperGrok" // kilocode_change
 // kilocode_change start
 export { OvhCloudAiEndpoints } from "./OvhCloud"
 export { VirtualQuotaFallbackProvider } from "./VirtualQuotaFallbackProvider"

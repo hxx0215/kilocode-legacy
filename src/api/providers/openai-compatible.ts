@@ -233,6 +233,14 @@ export abstract class OpenAICompatibleHandler extends BaseProvider implements Si
 		// Process the full stream to get all events
 		for await (const part of result.fullStream) {
 			// kilocode_change start
+			// AI SDK surfaces provider failures as stream parts. Throw the original error here;
+			// otherwise result.usage rejects later with a generic "No output generated" error
+			// and hides the actionable provider response.
+			if (part.type === "error") {
+				throw part.error instanceof Error ? part.error : new Error(String(part.error))
+			}
+			// kilocode_change end
+			// kilocode_change start
 			if (part.type === "tool-input-start") {
 				const existing = pendingToolInputs.get(part.id)
 				pendingToolInputs.set(part.id, {

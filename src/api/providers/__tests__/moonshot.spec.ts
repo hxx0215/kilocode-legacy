@@ -202,6 +202,27 @@ describe("MoonshotHandler", () => {
 			expect(textChunks[0].text).toBe("Test response")
 		})
 
+		// kilocode_change start
+		it("should surface the original AI SDK stream error", async () => {
+			async function* mockFullStream() {
+				yield { type: "error", error: new Error("provider rejected max_output_tokens") }
+			}
+
+			mockStreamText.mockReturnValue({
+				fullStream: mockFullStream(),
+				usage: Promise.resolve({ inputTokens: 0, outputTokens: 0, details: {} }),
+			})
+
+			const consume = async () => {
+				for await (const _chunk of handler.createMessage(systemPrompt, messages)) {
+					// The stream is expected to throw before yielding a chunk.
+				}
+			}
+
+			await expect(consume()).rejects.toThrow("provider rejected max_output_tokens")
+		})
+		// kilocode_change end
+
 		it("should include usage information", async () => {
 			async function* mockFullStream() {
 				yield { type: "text-delta", text: "Test response" }

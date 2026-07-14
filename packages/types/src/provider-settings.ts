@@ -59,6 +59,7 @@ export const dynamicProviders = [
 	"synthetic",
 	"sap-ai-core",
 	"zenmux",
+	"xai-super-grok",
 	// kilocode_change end
 	"deepinfra",
 	"io-intelligence",
@@ -469,6 +470,10 @@ const xaiSchema = apiModelIdProviderModelSchema.extend({
 	xaiApiKey: z.string().optional(),
 })
 
+// kilocode_change start
+const xaiSuperGrokSchema = apiModelIdProviderModelSchema.extend({})
+// kilocode_change end
+
 const groqSchema = apiModelIdProviderModelSchema.extend({
 	groqApiKey: z.string().optional(),
 })
@@ -644,6 +649,7 @@ export const providerSettingsSchemaDiscriminated = z.discriminatedUnion("apiProv
 	humanRelaySchema.merge(z.object({ apiProvider: z.literal("human-relay") })),
 	fakeAiSchema.merge(z.object({ apiProvider: z.literal("fake-ai") })),
 	xaiSchema.merge(z.object({ apiProvider: z.literal("xai") })),
+	xaiSuperGrokSchema.merge(z.object({ apiProvider: z.literal("xai-super-grok") })), // kilocode_change
 	ocaSchema.merge(z.object({ apiProvider: z.literal("oca") })), // kilocode_change
 	// kilocode_change start
 	apertisSchema.merge(z.object({ apiProvider: z.literal("apertis") })),
@@ -711,6 +717,7 @@ export const providerSettingsSchema = z.object({
 	...humanRelaySchema.shape,
 	...fakeAiSchema.shape,
 	...xaiSchema.shape,
+	...xaiSuperGrokSchema.shape, // kilocode_change
 	...ocaSchema.shape, // kilocode_change
 	...groqSchema.shape,
 	...basetenSchema.shape,
@@ -815,6 +822,7 @@ export const modelIdKeysByProvider: Record<TypicalProvider, ModelIdKey> = {
 	unbound: "unboundModelId",
 	requesty: "requestyModelId",
 	xai: "apiModelId",
+	"xai-super-grok": "apiModelId", // kilocode_change
 	// kilocode_change start
 	synthetic: "apiModelId",
 	ovhcloud: "ovhCloudAiEndpointsModelId",
@@ -980,6 +988,11 @@ export const MODELS_BY_PROVIDER: Record<
 		models: Object.keys(vscodeLlmModels),
 	},
 	xai: { id: "xai", label: "xAI (Grok)", models: Object.keys(xaiModels) },
+	"xai-super-grok": {
+		id: "xai-super-grok",
+		label: "SuperGrok / X Premium (OAuth)",
+		models: [],
+	}, // kilocode_change
 	zai: { id: "zai", label: "Z.ai", models: Object.keys(internationalZAiModels) },
 	baseten: { id: "baseten", label: "Baseten", models: Object.keys(basetenModels) },
 	corethink: { id: "corethink", label: "Corethink", models: Object.keys(corethinkModels) },

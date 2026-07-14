@@ -670,6 +670,22 @@
 			"maxTokensLabel": "Token di output massimi",
 			"maxTokensDescription": "Numero massimo di token di output per le risposte di Claude Code. Il valore predefinito è 8000."
 		},
+		"xaiSuperGrok": {
+			"title": "SuperGrok / X Premium (OAuth)",
+			"description": "Usa il tuo abbonamento SuperGrok o X Premium tramite xAI OAuth. Questo account viene archiviato globalmente in VS Code Secret Storage.",
+			"connected": "Connesso a xAI",
+			"signOut": "Disconnetti",
+			"browserSignIn": "Accedi con il browser",
+			"deviceSignIn": "Accesso remoto / VPS",
+			"signInHint": "L’accesso tramite browser usa la porta di callback locale 56121. Usa l’accesso remoto / VPS se il callback non può raggiungere questo computer.",
+			"browserWaiting": "In attesa del completamento dell’autorizzazione nel browser…",
+			"deviceWaiting": "Apri il link di verifica su qualsiasi dispositivo, inserisci il codice e mantieni aperta questa pagina.",
+			"copyLink": "Copia link",
+			"copyCode": "Copia codice",
+			"cancel": "Annulla accesso",
+			"modelsSource": "I modelli vengono caricati dal catalogo xAI su models.dev.",
+			"refreshModels": "Aggiorna modelli"
+		},
 		"qwenCode": {
 			"oauthPath": "Percorso credenziali OAuth (opzionale)",
 			"oauthPathDescription": "Percorso al file delle credenziali OAuth. Lascia vuoto per utilizzare la posizione predefinita (~/.qwen/oauth_creds.json).",

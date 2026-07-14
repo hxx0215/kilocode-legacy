@@ -32,6 +32,7 @@ import {
 	// kilocode_change end
 	mistralDefaultModelId,
 	xaiDefaultModelId,
+	xaiSuperGrokDefaultModelId, // kilocode_change
 	groqDefaultModelId,
 	cerebrasDefaultModelId,
 	chutesDefaultModelId,
@@ -113,6 +114,7 @@ import {
 	Vertex,
 	VSCodeLM,
 	XAI,
+	XaiSuperGrok, // kilocode_change
 	// kilocode_change start
 	VirtualQuotaFallbackProvider,
 	Synthetic,
@@ -183,6 +185,8 @@ const ApiOptions = ({
 		cloudIsAuthenticated,
 		claudeCodeIsAuthenticated,
 		openAiCodexIsAuthenticated,
+		xaiSuperGrokIsAuthenticated,
+		xaiSuperGrokEmail,
 	} = useExtensionState()
 
 	const [customHeaders, setCustomHeaders] = useState<[string, string][]>(() => {
@@ -456,6 +460,7 @@ const ApiOptions = ({
 				minimax: { field: "apiModelId", default: minimaxDefaultModelId },
 				mistral: { field: "apiModelId", default: mistralDefaultModelId },
 				xai: { field: "apiModelId", default: xaiDefaultModelId },
+				"xai-super-grok": { field: "apiModelId", default: xaiSuperGrokDefaultModelId }, // kilocode_change
 				groq: { field: "apiModelId", default: groqDefaultModelId },
 				chutes: { field: "apiModelId", default: chutesDefaultModelId },
 				baseten: { field: "apiModelId", default: basetenDefaultModelId },
@@ -784,6 +789,17 @@ const ApiOptions = ({
 					apiConfiguration={apiConfiguration}
 					setApiConfigurationField={setApiConfigurationField}
 					selectedModelInfo={selectedModelInfo}
+					simplifySettings={fromWelcomeView}
+				/>
+			)}
+
+			{selectedProvider === "xai-super-grok" && (
+				<XaiSuperGrok
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					models={routerModels?.["xai-super-grok"]}
+					isAuthenticated={xaiSuperGrokIsAuthenticated}
+					email={xaiSuperGrokEmail}
 					simplifySettings={fromWelcomeView}
 				/>
 			)}

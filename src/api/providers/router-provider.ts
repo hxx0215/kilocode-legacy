@@ -2,7 +2,7 @@ import OpenAI from "openai"
 
 import { type ModelInfo, type ModelRecord, NATIVE_TOOL_DEFAULTS } from "@roo-code/types"
 
-import { ApiHandlerOptions, RouterName } from "../../shared/api"
+import { ApiHandlerOptions, RouterName, type GetModelsOptions } from "../../shared/api" // kilocode_change
 
 import { BaseProvider } from "./base-provider"
 import { getModels, getModelsFromCache } from "./fetchers/modelCache"
@@ -58,7 +58,11 @@ export abstract class RouterProvider extends BaseProvider {
 	}
 
 	public async fetchModel() {
-		this.models = await getModels({ provider: this.name, apiKey: this.client.apiKey, baseUrl: this.client.baseURL })
+		this.models = await getModels({
+			provider: this.name,
+			apiKey: this.client.apiKey,
+			baseUrl: this.client.baseURL,
+		} as GetModelsOptions) // kilocode_change
 		return this.getModel()
 	}
 

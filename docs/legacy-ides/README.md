@@ -125,4 +125,5 @@ Pages describe shared legacy behavior unless a section is explicitly labeled for
 - [Virtual Quota Fallback](ai-providers/virtual-quota-fallback.md)
 - [Vscode Lm](ai-providers/vscode-lm.md)
 - [Xai](ai-providers/xai.md)
+- [SuperGrok / X Premium (OAuth)](ai-providers/xai-super-grok.md)
 - [Zenmux](ai-providers/zenmux.md)
