@@ -26,7 +26,7 @@ export const openAiCodexDefaultModelId: OpenAiCodexModelId = "gpt-5.5"
 export const openAiCodexModels = {
 	"gpt-5.6-sol": {
 		maxTokens: 128000,
-		contextWindow: 200000,
+		contextWindow: 372000,
 		supportsNativeTools: true,
 		defaultToolProtocol: "native",
 		includedTools: ["apply_patch"],
@@ -43,7 +43,7 @@ export const openAiCodexModels = {
 	},
 	"gpt-5.6-terra": {
 		maxTokens: 128000,
-		contextWindow: 200000,
+		contextWindow: 372000,
 		supportsNativeTools: true,
 		defaultToolProtocol: "native",
 		includedTools: ["apply_patch"],
@@ -60,7 +60,7 @@ export const openAiCodexModels = {
 	},
 	"gpt-5.6-luna": {
 		maxTokens: 128000,
-		contextWindow: 200000,
+		contextWindow: 372000,
 		supportsNativeTools: true,
 		defaultToolProtocol: "native",
 		includedTools: ["apply_patch"],
@@ -77,7 +77,7 @@ export const openAiCodexModels = {
 	},
 	"gpt-5.5": {
 		maxTokens: 128000,
-		contextWindow: 1000000,
+		contextWindow: 272000,
 		supportsNativeTools: true,
 		defaultToolProtocol: "native",
 		includedTools: ["apply_patch"],
